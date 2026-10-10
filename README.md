@@ -38,6 +38,27 @@ npm start
 
 Nota: i browser abilitano service worker e installazione completa solo su `localhost` o in HTTPS. In rete locale l'app funziona comunque; per l'uso offline vero e proprio pubblicala dietro HTTPS (per esempio con un tunnel come Cloudflare Tunnel o su un piccolo server con certificato).
 
+### Pubblicarla online con Railway (per usarla dal telefono ovunque)
+
+Il repository contiene già `Dockerfile` e `railway.json`. Il database SQLite vive in un **volume** montato su `/data`, così schede e storico sopravvivono ai riavvii e agli aggiornamenti.
+
+1. Crea un account su <https://railway.com> ed entra con GitHub.
+2. **New Project → Deploy from GitHub repo** e scegli `carico` (se non compare, autorizza Railway ad accedere al repository).
+3. Nel servizio appena creato:
+   - **Variables** → aggiungi `APP_PASSWORD` con una password a tua scelta (obbligatoria se l'app è online: senza, chiunque abbia il link vede e modifica i tuoi dati);
+   - **Volume**: clic destro sul servizio (o `⌘K` → *Add Volume*) e montalo su **`/data`**;
+   - **Settings → Networking → Generate Domain** per ottenere l'indirizzo pubblico `https://…up.railway.app`.
+4. Railway costruisce e avvia l'app (il primo deploy richiede qualche minuto). Al primo avvio il database viene creato e popolato da solo.
+5. Apri l'indirizzo sul telefono, inserisci la password e scegli **Aggiungi alla schermata Home** (Safari) o **Installa app** (Chrome).
+
+Ogni push su `main` ripubblica l'app; i dati restano nel volume. Fai comunque ogni tanto un backup da *Impostazioni → Scarica backup*.
+
+| Variabile | Default | Significato |
+| --- | --- | --- |
+| `APP_PASSWORD` | (nessuna) | Se impostata, tutte le pagine richiedono questa password |
+| `DATABASE_URL` | `file:/data/carico.db` (Docker) | Percorso del database SQLite |
+| `PORT` | impostata da Railway | Porta HTTP |
+
 ### Comandi utili
 
 | Comando | Cosa fa |
