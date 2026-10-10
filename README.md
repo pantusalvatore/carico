@@ -17,7 +17,6 @@ Web app per creare, salvare ed eseguire schede di allenamento in palestra. Pensa
 Requisiti: Node.js 20 o superiore.
 
 ```bash
-cd carico
 npm install
 npm run dev
 ```
@@ -64,7 +63,7 @@ Nota: i browser abilitano service worker e installazione completa solo su `local
 ## Struttura del progetto
 
 ```
-carico/
+./
 ├─ prisma/
 │  ├─ schema.prisma          # modelli: Exercise, Media, Plan, PlanDay, PlanItem, WorkoutSession, WorkoutSet
 │  ├─ seed.ts                # popola/aggiorna gli esercizi (idempotente)
